@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+   <ui:composition template="./resources/loginpage.xhtml">
+       <ui:define name="title">Forum :: Register</ui:define>
+       <ui:define name="content">
+           <br/><br/>
+           
+           <div class="bgwhite" id="registration">
+               <div class="asideTitle">Register a new account</div>
+
+            <h:form>
+                
+                <p:messages id="msg" closable="true" autoUpdate="true"></p:messages>
+                <h:panelGrid columns="2">  
+                    <h:outputLabel>Full Name </h:outputLabel>
+                    <h:inputText value="#{registerMB.users.UFullname}" required="true" requiredMessage="Full Name required" />
+
+                    <h:outputLabel>Username </h:outputLabel>
+                    <h:inputText value="#{registerMB.users.UUsername}" required="true" requiredMessage="Username required" />
+
+                    <h:outputLabel>Email </h:outputLabel>
+                    <h:inputText value="#{registerMB.users.UEmail}" required="true" requiredMessage="Email required" />
+
+                    <h:outputLabel>Password </h:outputLabel>
+                    <h:inputSecret value="#{registerMB.users.UPass}" required="true" requiredMessage="Invalid Password" />
+
+                    <h:outputText></h:outputText>
+                    <p:commandButton action="#{registerMB.register()}" value="Register" update="msg"/>
+                </h:panelGrid>
+
+            </h:form>              
+           
+           </div>
+           <br /><br /><br />
+           
+       </ui:define>
+       
+   </ui:composition> 
+</html>
+

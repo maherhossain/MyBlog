@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="../resources/adminpage.xhtml">
+        <ui:define name="title">MyBlog :: Admin</ui:define>
+
+        <ui:define name="aside">
+
+            <h1> <a href="#{request.getContextPath()}/"> <img src="#{request.getContextPath()}/resources/img/forum.png" class="logo"/> </a></h1> 
+            <br/>
+            <ul class="asideMenu">
+
+                <li> <a href="#{request.getContextPath()}/admin/welcome.xhtml"> <i class="fa fa-user"></i> #{sessionScope.uname} </a> </li>
+                <li> <a href="#{request.getContextPath()}/admin/users/0"> <i class="fa fa-users"></i> Users </a> </li>                
+                <li> <a href="#{request.getContextPath()}/admin/allcat.xhtml" class="active"> <i class="fa fa-bars"></i> Categories </a> </li>
+                <li> <a href="#{request.getContextPath()}/admin/posts/0"> <i class="fa fa-book"></i> Posts </a> </li>
+                <li> <a href="#{request.getContextPath()}/admin/newpost.xhtml"> <i class="fa fa-plus"></i>  New Post </a> </li>
+                <li> <h:form>                   
+                    <h:commandLink action="#{loginMB.logout()}"> <i class="fa fa-sign-out"></i> Logout</h:commandLink>            
+                </h:form> </li>              
+            </ul>
+
+        </ui:define>
+
+
+        <ui:define name="content">  
+            <h2>All Categories </h2><hr class="admin"/><br/><br/>
+            <p:outputPanel id="whole">
+
+                <h:form id="form">
+                    <p:growl />
+                    <p:commandButton value="New Category" type="button" onclick="PF('newDialog').show();" title="new" />
+                    <br/><br/>
+
+
+
+                    <table class="nice">
+                        <tbody>
+
+                            <tr> 
+                                <th>Name</th>
+                                <th>Posts</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        <c:forEach items="#{categoryMB.allCategory}" var="cats">
+                            <tr> 
+                                <td>#{cats.catName}</td>
+                                <td>#{cats.postses.size()}</td>
+                                <td> 
+                            <p:commandLink update=":whole" oncomplete="PF('carDialog').show()" title="Edit">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <f:setPropertyActionListener value="#{cats}" target="#{categoryMB.selectedCat}" />
+                            </p:commandLink>
+                            </td>
+
+                            <td> 
+                            <p:commandLink update=":whole" oncomplete="PF('deleteDialog').show()" title="Delete">
+                                <i class="fa fa-times"></i>
+                                <f:setPropertyActionListener value="#{cats}" target="#{categoryMB.selectedCat}" />
+                            </p:commandLink>
+                            </td>
+                            </tr>
+
+                        </c:forEach>
+
+
+                        </tbody>
+                    </table>
+                    <br/><br/><br/><br/><br/>
+
+
+
+
+
+
+                </h:form>
+                <!--New cat Dialogue-->
+                <p:dialog header="New Category" widgetVar="newDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">        
+                    <h:form>    
+                        <h:outputLabel>Category Name </h:outputLabel><br/>
+                        <h:inputText value="#{categoryMB.category.catName}" label="Category Name" required="true"  requiredMessage="Please Enter Category Name"/><br/>
+
+                        <p:commandButton action="#{categoryMB.addCategory()}" value="Add" update=":whole"/>
+                    </h:form>
+                </p:dialog>
+
+                <!--Edit cat Dialogue-->  
+                <p:dialog header="Edit Category (#{categoryMB.selectedCat.catName})" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form>
+
+                        <h:outputLabel>Category Name </h:outputLabel><br/>
+                        <h:inputText value="#{categoryMB.selectedCat.catName}" label="Category Name" required="true"  requiredMessage="Please Enter Category Name"/><br/>
+
+                        <p:commandButton action="#{categoryMB.updateCategory()}" value="Update" update=":whole"/>
+
+                    </h:form>
+
+                </p:dialog>  
+
+
+                <!--Edit cat Dialogue-->     
+                <p:dialog header="Are you sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+
+                    <h:form>
+
+                        <h:outputLabel>You are going to delete #{categoryMB.selectedCat.catName} </h:outputLabel><br/>
+
+                        <p:commandButton action="#{categoryMB.deleteCategory()}" value="OK" update=":whole"/>
+
+                    </h:form>
+
+
+                </p:dialog>
+
+
+
+
+
+
+
+            </p:outputPanel>   
+
+        </ui:define>               
+
+    </ui:composition> 
+</html>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 5:30:32 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Comments" table="comments" catalog="forum" optimistic-lock="version">
+        <id name="commentId" type="java.lang.Long">
+            <column name="comment_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="posts" class="entity.Posts" fetch="select">
+            <column name="comment_post" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="entity.Users" fetch="select">
+            <column name="comment_user" not-null="true" />
+        </many-to-one>
+        <property name="commentDate" type="timestamp">
+            <column name="comment_date" length="19" not-null="true" />
+        </property>
+        <property name="commentContent" type="string">
+            <column name="comment_content" length="65535" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

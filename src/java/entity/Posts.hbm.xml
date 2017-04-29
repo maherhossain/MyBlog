@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 5:30:32 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Posts" table="posts" catalog="forum" optimistic-lock="version">
+        <id name="postId" type="java.lang.Long">
+            <column name="post_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="category" class="entity.Category" fetch="select">
+            <column name="post_category" not-null="true" />
+        </many-to-one>
+        <many-to-one name="users" class="entity.Users" fetch="select">
+            <column name="post_user" not-null="true" />
+        </many-to-one>
+        <property name="postDate" type="timestamp">
+            <column name="post_date" length="19" not-null="true" />
+        </property>
+        <property name="postTitle" type="string">
+            <column name="post_title" length="65535" not-null="true" />
+        </property>
+        <property name="postContent" type="string">
+            <column name="post_content" not-null="true" />
+        </property>
+        <set name="commentses" table="comments" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="comment_post" not-null="true" />
+            </key>
+            <one-to-many class="entity.Comments" />
+        </set>
+    </class>
+</hibernate-mapping>

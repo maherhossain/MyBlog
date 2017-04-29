@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+   <ui:composition template="./resources/homepage.xhtml">
+       <ui:define name="title">MyBlog :: #{displayUserPostMB.userName}</ui:define>
+       
+       <ui:define name="content">
+           <div class="asideTitle">
+               <a href="#{request.getContextPath()}/">Home</a> <i class="fa fa-caret-right"></i> 
+               <a href="#{request.getContextPath()}/userinfo/#{displayUserPostMB.userId}/#{displayUserPostMB.userName}"> #{displayUserPostMB.userName} </a>
+           </div>
+           
+           <hr/>
+           All Posts of the user #{displayUserPostMB.userName}
+           <hr/><br />
+           <h:form>
+               <c:forEach items="#{displayUserPostMB.allUserPosts}" var="p">                   
+                   <h2>
+                   <a href="#{request.getContextPath()}/details/#{p.postId}/#{displayPostMB.urlEncode(p.postTitle)}"> #{p.postTitle} </a>                   
+                   </h2>
+            <p class="info">
+                <a href="#{request.getContextPath()}/userinfo/#{p.users.UId}/#{p.users.UUsername}"> <i class="fa fa-user"></i> #{p.users.UUsername} </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-clock-o"></i> #{p.postDate} &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#{request.getContextPath()}/category/#{p.category.catId}/#{p.category.catName}"> <i class="fa fa-bars"></i> #{p.category.catName}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#{request.getContextPath()}/details/#{p.postId}/#{displayPostMB.urlEncode(p.postTitle)}"> <i class="fa fa-comments"></i> #{p.commentses.size()} comments </a>               
+            </p>
+            
+                  <h:outputText value="#{p.postContent}" escape="false"></h:outputText>  <br />
+         
+
+                   <a class="readmore fright" href="#{request.getContextPath()}/details/#{p.postId}/#{displayPostMB.urlEncode(p.postTitle)}">Read more</a>
+           <span class="clear"></span><hr/><br/><br/>
+            </c:forEach>
+        </h:form> 
+        <br/>
+        
+        <c:if test="#{displayUserPostMB.nextPageNumber() gt 1}">
+            <a href="#{request.getContextPath()}/userinfo/#{displayUserPostMB.userId}/#{displayUserPostMB.userName}/#{displayUserPostMB.nextPageNumber()-2}" disabled="true" class="btnNormal"><i class="fa fa-backward"></i> Previous</a>
+        </c:if>
+        
+        <c:if test="#{not empty displayUserPostMB.allUserPosts and displayUserPostMB.allUserPosts.size() gt 4}">            
+            <a href="#{request.getContextPath()}/userinfo/#{displayUserPostMB.userId}/#{displayUserPostMB.userName}/#{displayUserPostMB.nextPageNumber()}" class="btnNormal">Next <i class="fa fa-forward"></i></a>
+        </c:if>
+       </ui:define>
+       
+   </ui:composition> 
+</html>
+

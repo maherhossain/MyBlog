@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 28, 2016 5:30:32 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.Users" table="users" catalog="forum" optimistic-lock="version">
+        <id name="UId" type="java.lang.Long">
+            <column name="u_id" />
+            <generator class="identity" />
+        </id>
+        <property name="UUsername" type="string">
+            <column name="u_username" length="60" not-null="true" unique="true" />
+        </property>
+        <property name="UPass" type="string">
+            <column name="u_pass" length="64" not-null="true" />
+        </property>
+        <property name="UFullname" type="string">
+            <column name="u_fullname" length="50" not-null="true" />
+        </property>
+        <property name="UEmail" type="string">
+            <column name="u_email" length="100" not-null="true" unique="true" />
+        </property>
+        <property name="URegistered" type="timestamp">
+            <column name="u_registered" length="19" not-null="true" />
+        </property>
+        <set name="postses" table="posts" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="post_user" not-null="true" />
+            </key>
+            <one-to-many class="entity.Posts" />
+        </set>
+        <set name="commentses" table="comments" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="comment_user" not-null="true" />
+            </key>
+            <one-to-many class="entity.Comments" />
+        </set>
+    </class>
+</hibernate-mapping>

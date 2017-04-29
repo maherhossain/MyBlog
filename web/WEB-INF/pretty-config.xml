@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+	<url-mapping id="home">
+		<pattern value="/" />
+		<view-id value="/index.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="homenext">
+		<pattern value="/next/#{displayPostMB.next}" />
+		<view-id value="/index.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="searchnext">
+		<pattern value="/search/#{searchResultMB.next}" />
+		<view-id value="/search.xhtml" />
+	</url-mapping>
+        
+        
+        <url-mapping id="adminPost">
+		<pattern value="/admin/posts/#{displayPostMB.next}" />
+		<view-id value="/admin/posts.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="adminUser">
+		<pattern value="/admin/users/#{registerMB.next}" />
+		<view-id value="/admin/users.xhtml" />
+	</url-mapping>
+        
+        
+        <url-mapping id="postdetails">
+		<pattern value="/details/#{displaySinglePostMB.singlePostId}/#{displaySinglePostMB.singlePostTitle}" />
+		<view-id value="/details.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="postsbycategory">
+		<pattern value="/category/#{displayCatPostMB.catId}/#{displayCatPostMB.catName}" />
+		<view-id value="/category.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="postsbycategorynext">
+		<pattern value="/category/#{displayCatPostMB.catId}/#{displayCatPostMB.catName}/#{displayCatPostMB.next}" />
+		<view-id value="/category.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="postsbyuser">
+		<pattern value="/userinfo/#{displayUserPostMB.userId}/#{displayUserPostMB.userName}" />
+		<view-id value="/userinfo.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="postsbyusernext">
+		<pattern value="/userinfo/#{displayUserPostMB.userId}/#{displayUserPostMB.userName}/#{displayUserPostMB.next}" />
+		<view-id value="/userinfo.xhtml" />
+	</url-mapping>
+        
+        <url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/login.xhtml" />
+	</url-mapping>
+        <url-mapping id="register">
+		<pattern value="/register" />
+		<view-id value="/register.xhtml" />
+	</url-mapping>
+
+</pretty-config>
